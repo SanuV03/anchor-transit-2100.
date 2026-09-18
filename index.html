@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"/>
+<title>ANCHOR — Transit 2100</title>
+<meta name="description" content="ANCHOR: a unified journey-planning platform for autonomous bus, train, air and smart-road transport in 2100."/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23073028'/%3E%3Cpath d='M12 5v14M8 9h8M6 13a6 6 0 0 0 12 0' stroke='%23fff' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface": "#f9f9f7",
+        "surface-dim": "#dadad8",
+        "surface-bright": "#f9f9f7",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-low": "#f4f4f2",
+        "surface-container": "#eeeeec",
+        "surface-container-high": "#e8e8e6",
+        "surface-container-highest": "#e2e3e1",
+        "on-surface": "#1a1c1b",
+        "on-surface-variant": "#414846",
+        "inverse-surface": "#2f3130",
+        "inverse-on-surface": "#f1f1ef",
+        "outline": "#727976",
+        "outline-variant": "#c1c8c4",
+        "primary": "#07241e",
+        "on-primary": "#ffffff",
+        "primary-container": "#1e3a33",
+        "on-primary-container": "#86a49b",
+        "secondary": "#40655b",
+        "on-secondary": "#ffffff",
+        "secondary-container": "#c2ebde",
+        "on-secondary-container": "#466c61",
+        "secondary-fixed": "#c2ebde",
+        "on-secondary-fixed": "#002019",
+        "primary-fixed": "#cae9df",
+        "on-primary-fixed": "#03201a",
+        "tertiary": "#2d1c00",
+        "on-tertiary": "#ffffff",
+        "tertiary-fixed": "#ffdeae",
+        "on-tertiary-fixed": "#281800",
+        "champagne": "#B08A4E",
+        "error": "#ba1a1a",
+        "on-error": "#ffffff",
+        "error-container": "#ffdad6",
+        "on-error-container": "#93000a",
+        "status-handled-bg": "#DEEBDD",
+        "status-handled-fg": "#3E6B45",
+        "status-advisory-bg": "#F3E4D3",
+        "status-advisory-fg": "#A5642A",
+        "status-critical-bg": "#F1DEDA",
+        "status-critical-fg": "#8B4B42"
+      },
+      borderRadius: { sm: "0.25rem", DEFAULT: "0.5rem", md: "0.75rem", lg: "1rem", xl: "1.5rem", full: "9999px" },
+      spacing: { gutter: "1.5rem", "gutter-mobile": "1rem", margin: "3rem", "margin-mobile": "1.25rem", "space-xs": "0.25rem", "space-sm": "0.5rem", "space-md": "1rem", "space-lg": "1.5rem", "space-xl": "2.5rem" }
+    }
+  }
+};
+</script>
+<style>
+  :root{
+    --a11y-scale: 1;
+    --font-serif: 'Newsreader', serif;
+    --font-sans: 'Inter', system-ui, sans-serif;
+  }
+  html,body{width:100%;margin:0;padding:0;background:#f9f9f7;}
+  body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;font-family:var(--font-sans);}
+  ::-webkit-scrollbar{display:none;}
+  .pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}
+  .pt-safe{padding-top:env(safe-area-inset-top,0px);}
+  .tnum{font-variant-numeric:tabular-nums;}
+
+  /* ---- Typography scale (rem-based so accessibility scaling actually works) ---- */
+  .t-hero-m{font-family:var(--font-serif);font-size:calc(2.125rem*var(--a11y-scale));line-height:calc(2.625rem*var(--a11y-scale));letter-spacing:-0.01em;font-weight:400;}
+  .t-h-lg-m{font-family:var(--font-serif);font-size:calc(1.625rem*var(--a11y-scale));line-height:calc(2.125rem*var(--a11y-scale));font-weight:400;}
+  .t-h-lg{font-family:var(--font-serif);font-size:calc(2rem*var(--a11y-scale));line-height:calc(2.5rem*var(--a11y-scale));letter-spacing:-0.01em;font-weight:400;}
+  .t-h-md{font-family:var(--font-serif);font-size:calc(1.5rem*var(--a11y-scale));line-height:calc(2rem*var(--a11y-scale));font-weight:400;}
+  .t-h-sm{font-family:var(--font-sans);font-size:calc(1.125rem*var(--a11y-scale));line-height:calc(1.625rem*var(--a11y-scale));letter-spacing:-0.01em;font-weight:600;}
+  .t-title-lg{font-family:var(--font-sans);font-size:calc(1.25rem*var(--a11y-scale));line-height:calc(1.75rem*var(--a11y-scale));letter-spacing:-0.01em;font-weight:600;}
+  .t-title-md{font-family:var(--font-sans);font-size:calc(1rem*var(--a11y-scale));line-height:calc(1.5rem*var(--a11y-scale));font-weight:600;}
+  .t-body-lg{font-family:var(--font-sans);font-size:calc(1.0625rem*var(--a11y-scale));line-height:calc(1.625rem*var(--a11y-scale));font-weight:400;}
+  .t-body-md{font-family:var(--font-sans);font-size:calc(0.9375rem*var(--a11y-scale));line-height:calc(1.375rem*var(--a11y-scale));font-weight:400;}
+  .t-body-sm{font-family:var(--font-sans);font-size:calc(0.8125rem*var(--a11y-scale));line-height:calc(1.125rem*var(--a11y-scale));font-weight:400;}
+  .t-label-lg{font-family:var(--font-sans);font-size:calc(0.875rem*var(--a11y-scale));line-height:calc(1.25rem*var(--a11y-scale));letter-spacing:0.01em;font-weight:500;}
+  .t-label-md{font-family:var(--font-sans);font-size:calc(0.75rem*var(--a11y-scale));line-height:calc(1rem*var(--a11y-scale));letter-spacing:0.02em;font-weight:500;}
+  .t-code{font-family:var(--font-sans);font-size:calc(0.6875rem*var(--a11y-scale));line-height:calc(0.875rem*var(--a11y-scale));letter-spacing:0.08em;font-weight:700;}
+
+  .screen{display:none;}
+  .screen.active{display:flex;}
+  @keyframes fadein{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .screen.active{animation:fadein .28s ease both;}
+
+  .chip{transition:background-color .15s ease,color .15s ease;}
+  .card{background:#fff;border:1px solid #DEE2DA;border-radius:1.5rem;box-shadow:0 4px 20px -2px rgba(30,58,51,0.04),0 2px 6px -1px rgba(30,58,51,0.02);}
+
+  /* Reduced motion */
+  body[data-motion="reduced"] *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;}
+
+  /* High contrast */
+  body[data-contrast="high"] .t-body-sm,
+  body[data-contrast="high"] .t-body-md,
+  body[data-contrast="high"] .t-label-md,
+  body[data-contrast="high"] .t-code{color:#111 !important;}
+  body[data-contrast="high"] .card{border-color:#0a0a0a;border-width:1.5px;}
+  body[data-contrast="high"] .bg-surface-container-low,
+  body[data-contrast="high"] .bg-surface-container{background-color:#e7e9e5 !important;}
+
+  /* Plain-language copy swap */
+  body[data-plain="true"] .copy-standard{display:none;}
+  body[data-plain="false"] .copy-plain{display:none;}
+
+  .sheet-backdrop{background:rgba(7,36,30,0.35);backdrop-filter:blur(6px) saturate(140%);}
+  .focus-ring:focus-visible{outline:3px solid #2E5349;outline-offset:2px;border-radius:10px;}
+
+  .progress-fill{transition:width 1.1s cubic-bezier(.4,0,.2,1);}
+  .persona-chip[aria-pressed="true"]{background:#1e3a33;color:#fff;}
+  .persona-chip[aria-pressed="false"]{background:#eeeeec;color:#1a1c1b;}
+</style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen antialiased" data-plain="false" data-contrast="normal" data-motion="normal">
+
+<!-- ============ HEADER ============ -->
+<header class="fixed top-0 w-full z-40 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(30,58,51,0.06)]">
+  <div class="h-16 px-margin-mobile flex items-center justify-between max-w-xl mx-auto">
+    <button class="flex flex-col items-start focus-ring" onclick="Anchor.go('home')" aria-label="ANCHOR home">
+      <div class="flex items-center gap-space-xs">
+        <span class="t-code uppercase text-primary tracking-widest">ANCHOR</span>
+        <span class="t-h-sm text-primary">/</span>
+        <span id="hdr-section" class="t-label-md text-on-surface capitalize">Voyage Hub</span>
+      </div>
+      <div class="flex items-center gap-1 mt-0.5">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+        <span class="t-code text-[10px] uppercase text-on-surface-variant tracking-wider">Network stable · 2100 mesh</span>
+      </div>
+    </button>
+    <div class="flex items-center gap-2">
+      <button class="w-10 h-10 rounded-full bg-surface-container-low text-primary flex items-center justify-center focus-ring" onclick="Anchor.openComfort()" aria-label="Open comfort and accessibility settings" title="Comfort settings">
+        <span class="material-symbols-outlined text-[20px]">tune</span>
+      </button>
+      <button class="w-9 h-9 rounded-full bg-primary flex items-center justify-center focus-ring" onclick="Anchor.go('station')" aria-label="Account and station help">
+        <span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ APP ROOT ============ -->
+<main id="app" class="w-full pt-16 pb-28 max-w-xl mx-auto">
+
+<!-- ============================================================= -->
+<!-- SCREEN: INTRO                                                  -->
+<!-- ============================================================= -->
+<section id="screen-intro" class="screen flex-col w-full px-margin-mobile pb-space-xl" data-screen>
+  <div class="flex flex-col items-center text-center pt-space-xl">
+    <div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center mb-space-md">
+      <span class="material-symbols-outlined text-secondary-fixed text-[28px]">anchor</span>
+    </div>
+    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low t-code uppercase tracking-widest text-on-surface-variant mb-space-md">
+      <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Autonomous orchestration · 2100
+    </span>
+    <h1 class="t-h-lg text-primary max-w-sm">Most journeys ask you to manage them.</h1>
+    <p class="t-body-lg text-on-surface-variant mt-space-sm max-w-sm">ANCHOR doesn't route you. It takes responsibility for keeping the arrival you set — across every autonomous bus, train, flight and smart road between here and there.</p>
+  </div>
+
+  <div class="card p-space-lg mt-space-lg">
+    <div class="flex items-center justify-between mb-space-md">
+      <div>
+        <span class="t-code uppercase tracking-widest text-on-surface-variant">Guaranteed sync path</span>
+        <p class="t-title-lg text-primary mt-0.5">Unified harmonic thread</p>
+      </div>
+      <span class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container t-label-md">Zero variance</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <div class="flex flex-col items-center gap-1 flex-1">
+        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-secondary-fixed text-[18px]">directions_bus</span></div>
+        <span class="t-label-md text-primary">Bus</span>
+      </div>
+      <div class="h-px flex-1 bg-primary-container -mt-4"></div>
+      <div class="flex flex-col items-center gap-1 flex-1">
+        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-secondary-fixed text-[18px]">subway</span></div>
+        <span class="t-label-md text-primary">Train</span>
+      </div>
+      <div class="h-px flex-1 bg-primary-container -mt-4"></div>
+      <div class="flex flex-col items-center gap-1 flex-1">
+        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-secondary-fixed text-[18px]">flight</span></div>
+        <span class="t-label-md text-primary">Air</span>
+      </div>
+      <div class="h-px flex-1 bg-outline-variant -mt-4"></div>
+      <div class="flex flex-col items-center gap-1 flex-1">
+        <div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center"><span class="material-symbols-outlined text-on-surface-variant text-[18px]">tune</span></div>
+        <span class="t-label-md text-on-surface-variant">Road</span>
+      </div>
+    </div>
+    <div class="flex items-center justify-between mt-space-md pt-space-sm border-t border-outline-variant/40">
+      <span class="t-body-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-secondary">verified</span> Mesh commitment</span>
+      <span class="t-body-sm font-semibold text-primary">99.98% confidence</span>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-space-sm mt-space-md">
+    <div class="flex items-start gap-space-sm bg-surface-container-low rounded-lg p-space-md">
+      <span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">lock_clock</span>
+      <div><p class="t-title-md text-primary">Target arrival anchor</p><p class="t-body-sm text-on-surface-variant mt-0.5">Set your exact destination time. Vehicles reschedule around you — not the other way round.</p></div>
+    </div>
+    <div class="flex items-start gap-space-sm bg-surface-container-low rounded-lg p-space-md">
+      <span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">accessible</span>
+      <div><p class="t-title-md text-primary">Built for everyone at once</p><p class="t-body-sm text-on-surface-variant mt-0.5">Step-free access, minimal walking and plain language aren't settings you dig for — pick who's travelling and the whole app adapts.</p></div>
+    </div>
+  </div>
+
+  <button class="mt-space-lg w-full h-[52px] bg-primary text-on-primary t-title-md rounded-xl flex items-center justify-center gap-2 active:scale-[0.99] transition-all shadow-md focus-ring" onclick="Anchor.finishIntro()">
+    <span>Get started</span><span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+  </button>
+</section>
+
+<!-- ============================================================= -->
+<!-- SCREEN 1 (MANDATORY): HOME — plan a journey                   -->
+<!-- ============================================================= -->
+<section id="screen-home" class="screen flex-col w-full px-margin-mobile pb-space-xl" data-screen>
+
+  <div id="welcome-back-banner" class="hidden items-start gap-2 bg-secondary-container/60 rounded-lg p-space-md mt-space-sm mb-1" role="status">
+    <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">psychology_alt</span>
+    <p class="t-body-sm text-on-secondary-container" id="welcome-back-text"></p>
+  </div>
+
+  <div class="pt-space-md pb-space-sm">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-space-xs text-secondary">
+        <span class="material-symbols-outlined text-[18px]">radio_button_checked</span>
+        <span class="t-code uppercase tracking-widest">Temporal lock · active</span>
+      </div>
+      <span class="t-label-md text-on-surface-variant tnum" id="clock-now">08:42 AM</span>
+    </div>
+    <h1 class="t-hero-m text-primary mt-space-xs">
+      <span class="copy-standard">Where do you need to be?</span>
+      <span class="copy-plain">Where are you going?</span>
+    </h1>
+    <p class="t-body-md text-on-surface-variant mt-1">
+      <span class="copy-standard">Intelligent transit mesh synced with quiet autonomous corridors.</span>
+      <span class="copy-plain">Tell ANCHOR your stop and time. It plans the rest.</span>
+    </p>
+  </div>
+
+  <!-- Persona quick-select: makes "works for everyone at once" visible, not just claimed -->
+  <div class="mb-space-md">
+    <p class="t-label-md uppercase tracking-wider text-on-surface-variant mb-space-sm">Who's travelling today?</p>
+    <div class="flex gap-space-sm overflow-x-auto pb-1" id="persona-chips" role="radiogroup" aria-label="Traveller profile">
+      <button class="persona-chip flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-full t-label-lg focus-ring" data-persona="justme" aria-pressed="true" onclick="Anchor.applyPersona('justme',this)"><span class="material-symbols-outlined text-[16px]">person</span>Just me</button>
+      <button class="persona-chip flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-full t-label-lg focus-ring" data-persona="wheelchair" aria-pressed="false" onclick="Anchor.applyPersona('wheelchair',this)"><span class="material-symbols-outlined text-[16px]">accessible</span>Wheelchair user</button>
+      <button class="persona-chip flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-full t-label-lg focus-ring" data-persona="lowvision" aria-pressed="false" onclick="Anchor.applyPersona('lowvision',this)"><span class="material-symbols-outlined text-[16px]">visibility</span>Low vision</button>
+      <button class="persona-chip flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-full t-label-lg focus-ring" data-persona="firsttime" aria-pressed="false" onclick="Anchor.applyPersona('firsttime',this)"><span class="material-symbols-outlined text-[16px]">explore</span>First trip</button>
+    </div>
+  </div>
+
+  <button class="w-full text-left bg-surface-container-low hover:bg-surface-container active:scale-[0.99] transition-all rounded-xl p-space-md shadow-sm flex items-start gap-space-md group mb-space-md focus-ring" onclick="Anchor.useRoutine()">
+    <div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center flex-shrink-0 mt-0.5">
+      <span class="material-symbols-outlined text-[20px]">auto_schedule</span>
+    </div>
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center justify-between gap-1">
+        <span class="t-code uppercase tracking-wider text-secondary">Tuesday routine</span>
+        <span class="t-label-md text-on-surface-variant flex items-center gap-0.5">10:00 AM <span class="material-symbols-outlined text-[16px]">chevron_right</span></span>
+      </div>
+      <p class="t-title-md text-primary mt-0.5 truncate">Riverside Medical Centre</p>
+      <p class="t-body-sm text-on-surface-variant mt-0.5">You've made this trip before — tap to reuse it</p>
+    </div>
+  </button>
+
+  <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-sm">
+    <div class="flex flex-col gap-1.5">
+      <label for="destination-input" class="t-code uppercase tracking-widest text-on-surface-variant flex items-center gap-1">
+        <span class="material-symbols-outlined text-[14px] text-primary">pin_drop</span> Destination
+      </label>
+      <div class="relative flex items-center h-[52px] bg-surface-container-low rounded-xl px-space-md focus-within:bg-surface-container-lowest focus-within:shadow-md transition-all">
+        <input id="destination-input" type="text" class="w-full bg-transparent t-title-md text-primary focus:outline-none placeholder:text-on-surface-variant" placeholder="Search a station, hub or address" value="Riverside Medical Centre" oninput="Anchor.onDestInput(this.value)"/>
+        <button aria-label="Clear destination" class="text-on-surface-variant hover:text-primary transition-colors p-1 focus-ring" onclick="document.getElementById('destination-input').value='';Anchor.onDestInput('');">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+      <div id="dest-suggestions" class="hidden flex-col gap-1 bg-surface-container-low rounded-lg p-1"></div>
+    </div>
+
+    <div class="relative w-full h-24 rounded-xl overflow-hidden my-space-xs shadow-inner bg-gradient-to-br from-primary via-primary-container to-secondary">
+      <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 300 100" preserveAspectRatio="none"><path d="M0 80 C 60 40, 110 90, 160 55 S 260 20, 300 45" stroke="#cae9df" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+      <div class="absolute inset-0 bg-gradient-to-t from-primary/85 via-primary/10 to-transparent flex items-end justify-between p-space-sm">
+        <div class="flex items-center gap-1.5 text-on-primary">
+          <span class="material-symbols-outlined text-[16px] animate-pulse text-secondary-fixed">navigation</span>
+          <span class="t-label-md text-on-primary font-medium">Pod Corridor 14 · Green Belt Route</span>
+        </div>
+        <span class="t-code text-secondary-fixed tracking-widest uppercase">Direct mesh</span>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="arrival-time" class="t-code uppercase tracking-widest text-on-surface-variant flex items-center gap-1">
+        <span class="material-symbols-outlined text-[14px] text-primary">schedule</span> Arrive by
+      </label>
+      <div class="flex items-center justify-between h-[52px] bg-surface-container-low rounded-xl px-space-md focus-within:bg-surface-container-lowest focus-within:shadow-md transition-all">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary text-[20px]">timelapse</span>
+          <input id="arrival-time" type="time" step="60" value="10:00" class="bg-transparent t-title-md text-primary focus:outline-none w-28" oninput="Anchor.onTimeInput(this.value)" aria-describedby="arrival-time-display"/>
+        </div>
+        <span id="arrival-time-display" class="t-label-lg text-on-surface-variant tnum">10:00 AM</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between mt-space-lg mb-space-sm">
+    <h2 class="t-title-lg text-primary">Your anchor conditions</h2>
+    <button class="t-label-md text-secondary focus-ring" onclick="Anchor.go('station')">Mesh rules</button>
+  </div>
+  <div class="grid grid-cols-2 gap-space-sm" id="condition-chips">
+    <button class="chip flex items-center gap-2 px-space-md py-3 rounded-xl bg-primary-container text-on-primary focus-ring" data-cond="stepfree" aria-pressed="true" onclick="Anchor.toggleChip(this)">
+      <span class="material-symbols-outlined text-[18px]">accessible</span>
+      <span class="t-label-lg flex-1 text-left">Step-free access</span>
+      <span class="material-symbols-outlined indicator-icon text-secondary-fixed text-[18px]">check_circle</span>
+    </button>
+    <button class="chip flex items-center gap-2 px-space-md py-3 rounded-xl bg-primary-container text-on-primary focus-ring" data-cond="minwalk" aria-pressed="true" onclick="Anchor.toggleChip(this)">
+      <span class="material-symbols-outlined text-[18px]">directions_walk</span>
+      <span class="t-label-lg flex-1 text-left">Minimal walking</span>
+      <span class="material-symbols-outlined indicator-icon text-secondary-fixed text-[18px]">check_circle</span>
+    </button>
+    <button class="chip flex items-center gap-2 px-space-md py-3 rounded-xl bg-surface-container text-on-surface focus-ring" data-cond="actearly" aria-pressed="false" onclick="Anchor.toggleChip(this)">
+      <span class="material-symbols-outlined text-[18px]">shield</span>
+      <span class="t-label-lg flex-1 text-left">Act early on risk</span>
+      <span class="material-symbols-outlined indicator-icon text-on-surface-variant opacity-40 text-[18px]">radio_button_unchecked</span>
+    </button>
+    <button class="chip flex items-center gap-2 px-space-md py-3 rounded-xl bg-surface-container text-on-surface focus-ring" data-cond="askfirst" aria-pressed="false" onclick="Anchor.toggleChip(this)">
+      <span class="material-symbols-outlined text-[18px]">help</span>
+      <span class="t-label-lg flex-1 text-left">Ask before changes</span>
+      <span class="material-symbols-outlined indicator-icon text-on-surface-variant opacity-40 text-[18px]">radio_button_unchecked</span>
+    </button>
+  </div>
+
+  <div class="flex items-start gap-2 bg-surface-container-low rounded-lg p-space-md mt-space-sm">
+    <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">shield</span>
+    <p class="t-body-sm text-on-surface-variant">ANCHOR will act on your behalf when it can keep every condition above — and ask first when it can't.</p>
+  </div>
+
+  <button id="set-anchor-btn" class="mt-space-lg w-full h-[52px] bg-primary text-on-primary t-title-md rounded-xl flex items-center justify-center gap-2 active:scale-[0.99] transition-all shadow-md relative overflow-hidden group focus-ring" onclick="Anchor.setAnchor()">
+    <span class="material-symbols-outlined text-[20px] text-secondary-fixed">anchor</span>
+    <span id="set-anchor-label">Set my anchor</span>
+  </button>
+  <p class="t-body-sm text-on-surface-variant text-center mt-2">This locks your arrival time — ANCHOR manages every transfer to keep it, using the conditions above.</p>
+
+  <div class="flex flex-col items-center gap-1 mt-space-sm">
+    <button class="t-label-lg text-secondary hover:text-primary transition-colors flex items-center justify-center gap-1 py-2 focus-ring" onclick="Anchor.go('routes')">
+      <span>Search routes manually instead</span><span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+    </button>
+    <button class="t-label-lg text-secondary hover:text-primary transition-colors flex items-center justify-center gap-1 py-2 focus-ring" onclick="Anchor.go('compare')">
+      <span>Compare bus, train, air and road for this trip</span><span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+    </button>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SCREEN: MANUAL ROUTE CHOICE                                    -->
+<!-- ============================================================= -->
+<section id="screen-routes" class="screen flex-col w-full px-margin-mobile pb-space-xl" data-screen>
+  <button class="flex items-center gap-1 t-label-lg text-on-surface-variant py-space-sm focus-ring" onclick="Anchor.go('home')"><span class="material-symbols-outlined text-[18px]">arrow_back</span> Back</button>
+  <span class="inline-flex items-center gap-1.5 self-start px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container t-label-md mb-space-sm"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Manual mode · full route control</span>
+  <h1 class="t-h-lg text-primary">Choose your own route</h1>
+  <p class="t-title-md text-on-surface-variant mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-[18px] text-secondary">location_on</span><span id="routes-dest">Riverside Medical Centre</span> · arrive by <span id="routes-time">10:00 AM</span></p>
+
+  <div class="flex items-start gap-2 bg-surface-container-low rounded-lg p-space-md mt-space-md">
+    <span class="material-symbols-outlined text-on-surface-variant text-[18px] mt-0.5">lock_open</span>
+    <p class="t-body-sm text-on-surface-variant">Choose your route manually. ANCHOR will stop making automatic route changes until you ask it to.</p>
+  </div>
+
+  <div class="card p-space-md mt-space-md">
+    <div class="flex items-center justify-between mb-space-sm">
+      <div><span class="t-code uppercase text-on-surface-variant">Synthetic network mesh · sector 04</span></div>
+      <span class="t-label-md text-secondary flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>Live corridors</span>
+    </div>
+    <div class="relative w-full h-32 bg-surface-container-low rounded-xl overflow-hidden">
+      <svg viewBox="0 0 320 120" class="w-full h-full">
+        <path d="M20 90 Q 100 30 160 55 T 300 40" stroke="#2E5349" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M20 90 Q 100 30 160 55 T 300 40" stroke="#C1C8C4" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.15"/>
+        <circle cx="20" cy="90" r="6" fill="#1E3A33"/><text x="20" y="108" font-size="9" text-anchor="middle" fill="#414846" font-family="Inter" font-weight="600">Current</text>
+        <circle cx="160" cy="55" r="5" fill="#B08A4E"/><text x="160" y="42" font-size="9" text-anchor="middle" fill="#A5642A" font-family="Inter" font-weight="600">Transfer 1</text>
+        <circle cx="300" cy="40" r="7" fill="#40655B" stroke="#fff" stroke-width="2"/><text x="300" y="58" font-size="9" text-anchor="middle" fill="#414846" font-family="Inter" font-weight="600">Riverside</text>
+      </svg>
+      <span class="absolute bottom-2 right-2 t-label-md bg-surface-container-lowest px-2 py-1 rounded-full text-on-surface-variant">Precision: 99.4%</span>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-space-sm mt-space-md" id="route-options" role="radiogroup" aria-label="Choose a route">
+    <button class="card p-space-md text-left flex flex-col gap-2 focus-ring" data-route="anchor" onclick="Anchor.chooseRoute(this,'anchor')" aria-pressed="true">
+      <div class="flex items-center justify-between">
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed t-code uppercase">ANCHOR's pick · Recommended</span>
+        <span class="check-dot w-6 h-6 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[14px]">check</span></span>
+      </div>
+      <p class="t-title-lg text-primary">Bus 14 → Metro 2 → Pod</p>
+      <p class="t-body-sm text-on-surface-variant" id="route-anchor-desc">Arrives 9:52 AM · step-free the whole way · 8 min buffer</p>
+      <div class="flex gap-space-md pt-1">
+        <span class="t-label-md text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-secondary">accessible</span>Step-free</span>
+        <span class="t-label-md text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-secondary">verified</span>+8m margin</span>
+        <span class="t-label-md text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-secondary">eco</span>Low carbon</span>
+      </div>
+    </button>
+
+    <button class="card p-space-md text-left flex flex-col gap-2 focus-ring" data-route="fast" onclick="Anchor.chooseRoute(this,'fast')" aria-pressed="false">
+      <div class="flex items-center justify-between">
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface t-code uppercase">Fastest</span>
+        <span class="check-dot w-6 h-6 rounded-full bg-surface-container-high"></span>
+      </div>
+      <p class="t-title-lg text-primary">Express Bus 9 → Metro 2</p>
+      <p class="t-body-sm text-on-surface-variant" id="route-fast-desc">Arrives 9:41 AM · 2 flights of stairs at the Central transfer</p>
+      <div class="flex gap-space-md pt-1">
+        <span class="t-label-md text-status-critical-fg flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">stairs</span>Stairs required</span>
+        <span class="t-label-md text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">bolt</span>High pace</span>
+      </div>
+    </button>
+
+    <button class="card p-space-md text-left flex flex-col gap-2 focus-ring" data-route="air" onclick="Anchor.chooseRoute(this,'air')" aria-pressed="false">
+      <div class="flex items-center justify-between">
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed t-code uppercase">Air · Champagne express</span>
+        <span class="check-dot w-6 h-6 rounded-full bg-surface-container-high"></span>
+      </div>
+      <p class="t-title-lg text-primary">SkyLink hop → Pod</p>
+      <p class="t-body-sm text-on-surface-variant" id="route-air-desc">Arrives 9:35 AM · fastest option · the pad is a 12 min walk from here, then a short step-free pod ride</p>
+      <div class="flex gap-space-md pt-1">
+        <span class="t-label-md text-champagne flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">luggage</span>Executive pod</span>
+        <span class="t-label-md text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">directions_walk</span>12m walk</span>
+      </div>
+    </button>
+  </div>
+
+  <button class="mt-space-lg w-full h-[52px] bg-primary-container text-on-primary t-title-md rounded-xl flex items-center justify-center gap-2 active:scale-[0.99] transition-all shadow-md focus-ring" onclick="Anchor.confirmRoute()">
+    <span>Confirm this route</span><span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+  </button>
+  <button class="w-full h-[48px] bg-surface-container text-on-surface t-title-md rounded-xl flex items-center justify-center gap-2 mt-space-sm focus-ring" onclick="Anchor.go('home')">
+    <span class="material-symbols-outlined text-[18px]">refresh</span><span>Let ANCHOR decide again</span>
+  </button>
+
+  <div class="flex items-center gap-3 bg-surface-container-low rounded-lg p-space-md mt-space-md">
+    <div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-secondary text-[18px]">contactless</span></div>
+    <div><p class="t-title-md text-primary">Biometric gate synced</p><p class="t-body-sm text-on-surface-variant">No turnstiles or tapping required at any transfer.</p></div>
+  </div>
+
+  <button class="t-label-lg text-on-surface-variant hover:text-primary flex items-center justify-center gap-1 py-3 focus-ring" onclick="Anchor.go('noroute')">
+    <span class="material-symbols-outlined text-[16px]">help_outline</span><span>What if no accessible route exists?</span>
+  </button>
+</section>
+
+<!-- ============================================================= -->
+<!-- SCREEN: COMPARE MODES (multi-modal comparison)                 -->
+<!-- ============================================================= -->
+<section id="screen-compare" class="screen flex-col w-full px-margin-mobile pb-space-xl gap-space-md" data-screen>
+  <button class="flex items-center gap-1 t-label-lg text-on-surface-variant py-space-sm focus-ring self-start" onclick="Anchor.go('home')"><span class="material-symbols-outlined text-[18px]">arrow_back</span> Back</button>
+  <div>
+    <h1 class="t-h-lg-m text-primary">Compare every mode</h1>
+    <p class="t-body-md text-on-surface-variant mt-1">Same trip to <span id="compare-dest" class="font-semibold text-on-surface">Riverside Medical Centre</span>, arriving by <span id="compare-time" class="font-semibold text-on-surface">10:00 AM</span> — across bus, train, air and smart road.</p>
+  </div>
+
+  <div class="flex flex-col gap-space-sm" id="compare-rows">
+    <div class="card p-space-md flex items-center gap-space-md">
+      <span class="w-11 h-11 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-secondary-fixed text-[20px]">directions_bus</span></span>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between"><p class="t-title-md text-primary">Bus + Metro + Pod</p><span class="t-label-md bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full">Recommended</span></div>
+        <p class="t-body-sm text-on-surface-variant mt-0.5">Arrives <span id="cmp-bus-eta">9:52 AM</span> · step-free · 68m walking</p>
+      </div>
+    </div>
+    <div class="card p-space-md flex items-center gap-space-md">
+      <span class="w-11 h-11 rounded-full bg-surface-container-high flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-surface text-[20px]">subway</span></span>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between"><p class="t-title-md text-primary">Express Metro only</p><span class="t-label-md bg-status-critical-bg text-status-critical-fg px-2 py-0.5 rounded-full">Stairs required</span></div>
+        <p class="t-body-sm text-on-surface-variant mt-0.5">Arrives <span id="cmp-fast-eta">9:41 AM</span> · fastest · 2 flights of stairs at Central</p>
+      </div>
+    </div>
+    <div class="card p-space-md flex items-center gap-space-md">
+      <span class="w-11 h-11 rounded-full bg-tertiary-fixed flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-tertiary-fixed text-[20px]">flight</span></span>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between"><p class="t-title-md text-primary">SkyLink air hop</p><span class="t-label-md bg-tertiary-fixed text-champagne px-2 py-0.5 rounded-full">Premium</span></div>
+        <p class="t-body-sm text-on-surface-variant mt-0.5">Arrives <span id="cmp-air-eta">9:35 AM</span> · 12 min walk to pad, step-free pod after</p>
+      </div>
+    </div>
+    <div class="card p-space-md flex items-center gap-space-md">
+      <span class="w-11 h-11 rounded-full bg-surface-container-high flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-surface text-[20px]">tune</span></span>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between"><p class="t-title-md text-primary">Smart road pod, door to door</p><span class="t-label-md bg-surface-container-high text-on-surface px-2 py-0.5 rounded-full">Least effort</span></div>
+        <p class="t-body-sm text-on-surface-variant mt-0.5">Arrives <span id="cmp-road-eta">9:58 AM</span> · step-free · no transfers, no walking</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-start gap-2 bg-surface-container-low rounded-lg p-space-md">
+    <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">insights</span>
+    <p class="t-body-sm text-on-surface-variant">ANCHOR picked "Bus + Metro + Pod" because it's the only option meeting every one of your anchor conditions with the widest safety buffer. Turn off a condition on Home to see the ranking change.</p>
+  </div>
+
+  <button class="w-full h-[48px] bg-primary text-on-primary t-title-md rounded-xl flex items-center justify-center gap-2 focus-ring" onclick="Anchor.go('itinerary')">
+    <span>Use ANCHOR's recommended route</span><span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+  </button>
+</section>
+
+<!-- ============================================================= -->
+<!-- SCREEN 2 (MANDATORY): JOURNEY / ROUTE DETAILS                  -->
+<!-- ============================================================= -->
+<section id="screen-itinerary" class="screen flex-col w-full px-margin-mobile pb-space-xl gap-space-md" data-screen>
+  <div class="flex items-center justify-between mt-space-xs">
+    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary-container text-on-secondary-container">
+      <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span class="t-code uppercase tracking-wider">On track</span>
+    </div>
+    <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-fixed text-on-primary-fixed">
+      <span class="material-symbols-outlined text-[15px]">verified_user</span><span class="t-label-md">Arrival protected</span>
+    </div>
+  </div>
+
+  <div class="card p-space-lg">
+    <span class="t-code uppercase tracking-widest text-on-surface-variant">Scheduled destination</span>
+    <h1 class="t-h-lg text-primary mt-1" id="it-destination">Riverside Medical Centre</h1>
+    <div class="flex items-end justify-between mt-space-sm">
+      <div>
+        <span class="t-code uppercase tracking-widest text-on-surface-variant">Guaranteed arrival</span>
+        <p class="t-h-md text-primary tnum" id="it-arrival">10:00 <span class="t-title-md">AM</span></p>
+      </div>
+      <div class="text-right">
+        <span class="t-code uppercase tracking-widest text-on-surface-variant">Contingency</span>
+        <p class="t-title-lg text-secondary">+8 min buffer</p>
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-2 mt-space-sm" id="it-condition-pills"></div>
+  </div>
+
+  <div class="card p-space-lg">
+    <div class="flex items-center justify-between mb-space-md">
+      <h2 class="t-title-lg text-primary">Autonomous topology</h2>
+      <span class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container t-label-md">Synchronized · 3 legs</span>
+    </div>
+    <ol class="flex flex-col" id="it-legs">
+      <li class="flex gap-space-md pb-space-md relative">
+        <div class="flex flex-col items-center">
+          <span class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-secondary-fixed text-[16px]">directions_bus</span></span>
+          <span class="w-px flex-1 bg-primary-container mt-1"></span>
+        </div>
+        <div class="flex-1 bg-surface-container-low rounded-lg p-space-md">
+          <div class="flex items-center justify-between"><span class="t-title-md text-primary">Bus 14 · Grantham Ave</span><span class="t-label-md text-secondary tnum">14 min</span></div>
+          <p class="t-body-sm text-on-surface-variant mt-0.5">Departs <span id="t-bus-depart" class="tnum">9:12 AM</span> · Bay 2</p>
+          <p class="t-body-sm text-on-surface-variant mt-1">Low-floor autonomous bus with a step-free ramp. Boards at Grantham Ave, bay 2.</p>
+          <span class="inline-flex items-center gap-1 mt-2 t-label-md text-status-handled-fg bg-status-handled-bg px-2 py-0.5 rounded-full"><span class="material-symbols-outlined text-[13px]">check</span>Ramp deployed on arrival</span>
+        </div>
+      </li>
+      <li class="flex gap-space-md pb-space-md relative">
+        <div class="flex flex-col items-center">
+          <span class="w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-surface text-[16px]">subway</span></span>
+          <span class="w-px flex-1 bg-outline-variant mt-1"></span>
+        </div>
+        <div class="flex-1 bg-surface-container-low rounded-lg p-space-md">
+          <div class="flex items-center justify-between"><span class="t-title-md text-primary">Metro Line 2 · Central</span><span class="t-label-md text-secondary tnum">19 min</span></div>
+          <p class="t-body-sm text-on-surface-variant mt-0.5">Transfer <span id="t-metro-transfer" class="tnum">9:28 AM</span> · Concourse L3</p>
+          <p class="t-body-sm text-on-surface-variant mt-1">Transfer is a 2-minute step-free walk from the bus bay to the platform lift.</p>
+          <span class="inline-flex items-center gap-1 mt-2 t-label-md text-secondary bg-secondary-container px-2 py-0.5 rounded-full"><span class="material-symbols-outlined text-[13px]">elevator</span>Platform lift sync priority: active</span>
+        </div>
+      </li>
+      <li class="flex gap-space-md relative">
+        <div class="flex flex-col items-center">
+          <span class="w-9 h-9 rounded-full bg-tertiary-fixed flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-tertiary-fixed text-[16px]">airport_shuttle</span></span>
+        </div>
+        <div class="flex-1 bg-surface-container-low rounded-lg p-space-md">
+          <div class="flex items-center justify-between"><span class="t-title-md text-primary">Smart Road Pod · Central</span><span class="t-label-md text-secondary tnum">3 min</span></div>
+          <p class="t-body-sm text-on-surface-variant mt-0.5">Departs <span id="t-pod-depart" class="tnum">9:49 AM</span> · Gate Alpha</p>
+          <p class="t-body-sm text-on-surface-variant mt-1">Autonomous pod on the dedicated smart-road lane. Drop-off is at the main entrance, 20 metres from the door.</p>
+          <div class="flex items-center justify-between mt-2">
+            <span class="t-label-md text-champagne bg-tertiary-fixed px-2 py-0.5 rounded-full">Dedicated lane 4</span>
+            <span class="t-label-md text-on-surface tnum font-semibold">Arr <span id="t-pod-arrive">9:52 AM</span></span>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="bg-surface-container-low rounded-xl p-space-md">
+    <div class="flex items-center gap-2 mb-1"><span class="material-symbols-outlined text-secondary text-[18px]">psychology</span><h3 class="t-title-md text-primary">Why this route?</h3>
+      <button class="ml-auto text-on-surface-variant focus-ring" onclick="Anchor.speak('This connection meets your arrival commitment with step free access and the least walking of the available options. A faster route exists but needs stairs at the Central transfer, so it was not chosen.')" aria-label="Read this explanation aloud"><span class="material-symbols-outlined text-[18px]">volume_up</span></button>
+    </div>
+    <p class="t-body-md text-on-surface-variant">
+      <span class="copy-standard">This connection meets your <span id="why-time">10:00 AM</span> commitment with step-free access and the least walking of the available options. A faster route exists but needs stairs at the Central transfer, so it wasn't chosen.</span>
+      <span class="copy-plain">This route gets you there by <span id="why-time-plain">10:00 AM</span> with no stairs and less walking. A faster route needs stairs, so ANCHOR skipped it.</span>
+    </p>
+    <div class="flex gap-space-lg mt-space-sm">
+      <div><span class="t-label-md text-on-surface-variant">Stair avoidance</span><p class="t-title-md text-primary">100%</p></div>
+      <div><span class="t-label-md text-on-surface-variant">Walking distance</span><p class="t-title-md text-primary">68m</p></div>
+    </div>
+  </div>
+
+  <button class="w-full h-[52px] bg-primary text-on-primary t-title-md rounded-xl flex items-center justify-center gap-2 active:scale-[0.99] transition-all shadow-md focus-ring" onclick="Anchor.startJourney()">
+    <span class="material-symbols-outlined text-[20px]">play_arrow</span><span>Start journey</span>
+  </button>
+  <div class="flex justify-center gap-space-lg">
+    <button class="t-label-lg text-secondary text-center py-2 focus-ring" onclick="Anchor.go('routes')">Take control of this route</button>
+    <button class="t-label-lg text-secondary text-center py-2 focus-ring" onclick="Anchor.go('compare')">Compare other modes</button>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SCREEN 3 (MANDATORY): LIVE JOURNEY / TRACKING                  -->
+<!-- ============================================================= -->
+<section id="screen-live" class="screen flex-col w-full px-margin-mobile gap-space-md" data-screen>
+  <div class="flex items-center justify-between pt-space-xs">
+    <div class="flex items-center gap-space-xs">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container t-label-md" id="live-status-pill">
+        <span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span><span class="font-semibold" id="live-status-text">On track</span>
+      </span>
+      <span class="t-code text-on-surface-variant uppercase tracking-wider">Line 14A · Pod active</span>
+    </div>
+    <button class="p-2 rounded-full text-on-surface-variant hover:text-primary focus-ring" onclick="Anchor.explainDecision()" title="Explain the latest automatic decision" aria-label="Explain the latest automatic decision">
+      <span class="material-symbols-outlined text-[20px]">info</span>
+    </button>
+  </div>
+
+  <div class="flex flex-col gap-0.5">
+    <h1 class="t-h-lg-m text-primary" id="live-headline">On Bus 14</h1>
+    <p class="t-body-md text-on-surface-variant" id="live-subtext">Next: get off at Central in 4 stops</p>
+  </div>
+
+  <div class="flex flex-col gap-2 p-space-md bg-surface-container-lowest rounded-xl shadow-sm">
+    <div class="flex justify-between items-center text-on-surface-variant t-code uppercase tracking-wider">
+      <div class="flex items-center gap-1 text-secondary font-bold"><span class="material-symbols-outlined text-[15px]">directions_bus</span>Bus 14</div>
+      <div class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">subway</span>Metro M2</div>
+      <div class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">flag</span>Arrive</div>
+    </div>
+    <div class="grid grid-cols-3 gap-1.5 items-center w-full h-2">
+      <div class="relative w-full h-full bg-surface-container-high rounded-full overflow-hidden"><div class="progress-fill absolute left-0 top-0 bottom-0 bg-secondary rounded-full" id="seg1" style="width:0%"></div></div>
+      <div class="relative w-full h-full bg-surface-container-high rounded-full overflow-hidden"><div class="progress-fill absolute left-0 top-0 bottom-0 bg-secondary-fixed rounded-full" id="seg2" style="width:0%"></div></div>
+      <div class="relative w-full h-full bg-surface-container-high rounded-full overflow-hidden"><div class="progress-fill absolute left-0 top-0 bottom-0 bg-outline-variant rounded-full" id="seg3" style="width:0%"></div></div>
+    </div>
+    <div class="flex justify-between items-center text-on-surface-variant t-body-sm pt-0.5">
+      <span class="text-on-surface tnum" id="live-departed">Departed 09:34</span><span>Transfer: Platform 3</span><span class="font-semibold text-primary tnum" id="live-eta">Est. 09:52</span>
+    </div>
+  </div>
+
+  <div class="flex p-1 bg-surface-container rounded-xl w-full">
+    <button class="flex-1 py-2 rounded-lg t-label-lg text-center bg-surface-container-lowest text-primary shadow-sm font-semibold focus-ring" id="tab-btn-status" onclick="Anchor.switchTab('status')">Status</button>
+    <button class="flex-1 py-2 rounded-lg t-label-lg text-center text-on-surface-variant focus-ring" id="tab-btn-map" onclick="Anchor.switchTab('map')">Map</button>
+  </div>
+
+  <div class="flex flex-col gap-space-md" id="view-status">
+    <div class="p-space-lg bg-surface-container-lowest rounded-xl shadow-sm flex flex-col gap-space-md">
+      <div class="grid grid-cols-2 gap-space-md">
+        <div class="flex flex-col gap-1 p-space-md rounded-lg bg-surface-container-low">
+          <span class="t-code text-on-surface-variant uppercase tracking-wider">Arrival commitment</span>
+          <span class="t-h-md text-primary tnum" id="live-commitment">10:00 AM</span>
+          <span class="t-body-sm text-secondary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">verified</span>Guaranteed</span>
+        </div>
+        <div class="flex flex-col gap-1 p-space-md rounded-lg bg-surface-container-low">
+          <span class="t-code text-on-surface-variant uppercase tracking-wider">Current estimate</span>
+          <span class="t-h-md text-primary tnum" id="live-estimate">9:52 AM</span>
+          <span class="t-body-sm text-secondary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span><span id="live-early">8 min early</span></span>
+        </div>
+      </div>
+      <div class="flex flex-col gap-3 pt-space-xs">
+        <div class="flex items-center justify-between py-2 bg-surface-container-low/60 px-space-md rounded-lg">
+          <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">accessible</span><span class="t-body-md text-on-surface">Access requirement</span></div>
+          <span class="t-label-lg font-semibold text-primary" id="live-access">Step-free</span>
+        </div>
+        <div class="flex items-center justify-between py-2 bg-surface-container-low/60 px-space-md rounded-lg">
+          <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">hourglass_empty</span><span class="t-body-md text-on-surface">Buffer remaining</span></div>
+          <span class="t-label-lg font-semibold text-primary" id="live-buffer">8 min</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low">
+        <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-secondary to-primary-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-primary text-[22px]">domain</span></div>
+        <div class="flex flex-col min-w-0"><span class="t-code uppercase text-on-surface-variant">Next hub</span><span class="t-title-md text-primary truncate">Central Waystation concourse</span><span class="t-body-sm text-on-surface-variant">Step-free automated lift at Bay 2</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hidden flex-col gap-space-md" id="view-map">
+    <div class="relative bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-md overflow-hidden">
+      <div class="flex justify-between items-center">
+        <div><span class="t-code uppercase text-on-surface-variant">Network geometry</span><h2 class="t-h-sm text-primary">Schematic topology</h2></div>
+        <span class="px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface t-code uppercase">Live relay</span>
+      </div>
+      <div class="relative w-full h-56 bg-surface-container-low rounded-xl flex items-center justify-center overflow-hidden p-space-sm">
+        <svg viewBox="0 0 320 180" class="w-full h-full">
+          <line x1="0" x2="320" y1="45" y2="45" stroke="rgba(46,83,73,0.06)" stroke-dasharray="4 4"/>
+          <line x1="0" x2="320" y1="90" y2="90" stroke="rgba(46,83,73,0.06)" stroke-dasharray="4 4"/>
+          <line x1="0" x2="320" y1="135" y2="135" stroke="rgba(46,83,73,0.06)" stroke-dasharray="4 4"/>
+          <path d="M40 90 L120 90" stroke="#40655B" stroke-width="4" stroke-linecap="round"/>
+          <path d="M120 90 C150 90 170 50 200 50 L280 50" stroke="#C1C8C4" stroke-width="4" stroke-dasharray="6 6" stroke-linecap="round"/>
+          <circle cx="40" cy="90" r="6" fill="#1E3A33"/><text x="40" y="112" font-size="10" font-family="Inter" font-weight="600" text-anchor="middle" fill="#414846">Origin</text>
+          <g id="live-vehicle-node" transform="translate(90,90)">
+            <circle r="14" fill="#40655B" opacity="0.2" class="animate-ping"/>
+            <circle r="8" fill="#40655B"/><circle r="3.5" fill="#fff"/>
+            <rect x="-32" y="-30" width="64" height="20" rx="6" fill="#1E3A33"/>
+            <text x="0" y="-17" font-size="9" font-family="Inter" font-weight="600" text-anchor="middle" fill="#fff">You are here</text>
+            <polygon points="0,-10 -4,-6 4,-6" fill="#1E3A33"/>
+          </g>
+          <circle cx="200" cy="50" r="7" fill="#fff" stroke="#1E3A33" stroke-width="3"/><text x="200" y="32" font-size="10" font-family="Inter" font-weight="600" text-anchor="middle" fill="#1A1C1B">Central</text>
+          <circle cx="280" cy="50" r="6" fill="#40655B"/><text x="280" y="72" font-size="10" font-family="Inter" font-weight="600" text-anchor="middle" fill="#414846">Riverside</text>
+        </svg>
+      </div>
+      <div class="flex items-center justify-between text-on-surface-variant t-body-sm px-1">
+        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-secondary"></span>Bus sector active</span>
+        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-outline-variant"></span>Transfer awaiting Central</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hidden overflow-hidden rounded-xl bg-surface-container-low p-space-md shadow-sm flex-col gap-space-sm" id="disruption-banner">
+    <div class="flex gap-space-sm items-start">
+      <div class="flex-shrink-0 w-8 h-8 rounded-full bg-secondary-container text-secondary flex items-center justify-center mt-0.5"><span class="material-symbols-outlined text-[18px]">auto_fix_high</span></div>
+      <div class="flex flex-col gap-1 pr-1">
+        <div class="flex items-center gap-2"><span class="t-code uppercase text-secondary tracking-wider font-bold">Handled by ANCHOR</span><span class="w-1 h-1 rounded-full bg-outline-variant"></span><span class="t-body-sm text-on-surface-variant">Autonomous reroute</span></div>
+        <p class="t-title-md text-primary">Your connection changed. You're still arriving on time.</p>
+        <p class="t-body-sm text-on-surface-variant">ANCHOR chose a different transfer that keeps your arrival unchanged.</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-2 pl-11">
+      <div class="bg-surface-container-lowest rounded-lg p-2">
+        <span class="t-label-md text-on-surface-variant block">Original plan</span>
+        <span class="t-body-sm text-on-surface">Platform 3 · stairs risk</span>
+      </div>
+      <div class="bg-secondary-container/70 rounded-lg p-2">
+        <span class="t-label-md text-secondary block">ANCHOR's change</span>
+        <span class="t-body-sm text-on-surface">Lift-priority platform · same arrival</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pt-space-xs pb-space-sm">
+    <button id="live-continue-btn" class="w-full h-[52px] bg-primary-container text-on-primary t-title-md rounded-xl flex items-center justify-center gap-2 active:scale-[0.99] transition-all shadow-md focus-ring" onclick="Anchor.continueJourney()">
+      <span id="live-continue-label">Continue journey</span><span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+    </button>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SCREEN: NO ACCESSIBLE ROUTE (failure / edge-case state)        -->
+<!-- ============================================================= -->
+<section id="screen-noroute" class="screen flex-col w-full px-margin-mobile pb-space-xl gap-space-md" data-screen>
+  <button class="flex items-center gap-1 t-label-lg text-on-surface-variant py-space-sm focus-ring self-start" onclick="Anchor.go('routes')"><span class="material-symbols-outlined text-[18px]">arrow_back</span> Back</button>
+  <div class="flex flex-col items-center text-center pt-space-sm">
+    <div class="w-14 h-14 rounded-full bg-status-advisory-bg flex items-center justify-center mb-space-sm"><span class="material-symbols-outlined text-status-advisory-fg text-[26px]">info</span></div>
+    <h1 class="t-h-md text-primary">No step-free route meets 10:00 AM right now</h1>
+    <p class="t-body-md text-on-surface-variant mt-1 max-w-xs">This is rare — usually one lift is offline. ANCHOR keeps checking automatically. Here's what you can do right now.</p>
+  </div>
+
+  <div class="flex flex-col gap-space-sm mt-space-sm">
+    <button class="card p-space-md text-left flex items-center gap-space-md focus-ring" onclick="Anchor.emergency()">
+      <span class="w-11 h-11 rounded-full bg-primary flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-primary text-[20px]">support_agent</span></span>
+      <div class="flex-1"><p class="t-title-md text-primary">Request platform assistance</p><p class="t-body-sm text-on-surface-variant">A concierge meets you and helps with the nearest stairs or a manual lift.</p></div>
+      <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+    </button>
+    <button class="card p-space-md text-left flex items-center gap-space-md focus-ring" onclick="Anchor.notifyWhenAvailable()">
+      <span class="w-11 h-11 rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-secondary text-[20px]">notifications_active</span></span>
+      <div class="flex-1"><p class="t-title-md text-primary">Notify me the moment a route opens</p><p class="t-body-sm text-on-surface-variant">ANCHOR watches the mesh and alerts you the instant a step-free path appears.</p></div>
+      <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+    </button>
+    <button class="card p-space-md text-left flex items-center gap-space-md focus-ring" onclick="Anchor.go('home')">
+      <span class="w-11 h-11 rounded-full bg-surface-container-high flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-surface text-[20px]">schedule</span></span>
+      <div class="flex-1"><p class="t-title-md text-primary">Choose a different arrival time</p><p class="t-body-sm text-on-surface-variant">A step-free route exists for most other times today.</p></div>
+      <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+    </button>
+  </div>
+
+  <div class="flex items-start gap-2 bg-surface-container-low rounded-lg p-space-md mt-space-sm">
+    <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">shield</span>
+    <p class="t-body-sm text-on-surface-variant">ANCHOR never silently drops your access conditions to hit a time. If it can't keep both, it stops and asks — like now.</p>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SCREEN: ARRIVAL / COMMITMENT KEPT                              -->
+<!-- ============================================================= -->
+<section id="screen-arrived" class="screen flex-col w-full px-margin-mobile pb-space-xl" data-screen>
+  <div class="relative w-full h-40 rounded-xl overflow-hidden mt-space-xs bg-gradient-to-br from-secondary via-primary-container to-primary flex items-end p-space-sm">
+    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-lowest/90 text-primary t-code uppercase absolute top-3 right-3">Terminal Arch 4</span>
+    <svg class="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 300 100" preserveAspectRatio="none"><path d="M0 70 Q 75 20 150 55 T 300 30" stroke="#f9f9f7" stroke-width="2" fill="none"/></svg>
+  </div>
+  <div class="flex flex-col items-center text-center bg-surface-container-low rounded-b-xl -mt-1 pb-space-lg pt-space-lg px-space-md">
+    <div class="w-16 h-16 rounded-full bg-secondary-container flex items-center justify-center mb-space-sm"><span class="material-symbols-outlined text-secondary text-[30px]">check</span></div>
+    <h1 class="t-h-md text-primary">You've arrived.</h1>
+    <p class="t-body-md text-on-surface-variant flex items-center gap-1 mt-1"><span class="material-symbols-outlined text-[16px]">location_on</span><span id="arr-destination">Riverside Medical Centre</span> · <span id="arr-time" class="tnum">9:58 AM</span></p>
+  </div>
+
+  <div class="card p-space-lg mt-space-md">
+    <div class="flex items-center justify-between mb-space-md">
+      <span class="t-code uppercase text-on-surface-variant">Resolved multi-modal path</span>
+      <span class="t-label-md text-secondary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check_circle</span>Fully synchronized</span>
+    </div>
+    <div class="flex items-center justify-between">
+      <div class="flex flex-col items-center gap-1"><span class="w-3 h-3 rounded-full bg-secondary"></span><span class="t-label-md text-on-surface-variant">Origin</span></div>
+      <span class="h-px flex-1 bg-secondary mx-1"></span>
+      <div class="flex flex-col items-center gap-1"><span class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center"><span class="material-symbols-outlined text-[14px]">directions_bus</span></span><span class="t-label-md text-on-surface-variant">Bus 14</span></div>
+      <span class="h-px flex-1 bg-secondary mx-1"></span>
+      <div class="flex flex-col items-center gap-1"><span class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center"><span class="material-symbols-outlined text-[14px]">subway</span></span><span class="t-label-md text-on-surface-variant">Metro L2</span></div>
+      <span class="h-px flex-1 bg-secondary mx-1"></span>
+      <div class="flex flex-col items-center gap-1"><span class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center"><span class="material-symbols-outlined text-[14px]">airport_shuttle</span></span><span class="t-label-md text-on-surface-variant">Pod</span></div>
+      <span class="h-px flex-1 bg-secondary mx-1"></span>
+      <div class="flex flex-col items-center gap-1"><span class="w-7 h-7 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[14px]">check</span></span><span class="t-label-md text-primary font-semibold">Riverside</span></div>
+    </div>
+  </div>
+
+  <div class="card p-space-lg mt-space-md flex flex-col gap-space-sm">
+    <div class="flex items-center justify-between t-code uppercase text-on-surface-variant"><span>Attestation protocol</span><span>ANCHOR · verified #8849</span></div>
+    <p class="t-title-md text-primary">Your commitment, kept</p>
+    <p class="t-body-sm text-on-surface-variant -mt-1">Civil mobility integrity summary for your itinerary</p>
+
+    <div class="flex items-center justify-between bg-surface-container-low rounded-lg p-space-md">
+      <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">schedule</span><div><span class="t-body-sm text-on-surface-variant block">Arrival commitment</span><span class="t-title-md text-primary tnum" id="arr-commitment">10:00 AM</span></div></div>
+      <span class="t-label-md bg-secondary-container text-on-secondary-container px-2 py-1 rounded-full flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">check_circle</span>2m early</span>
+    </div>
+    <div class="flex items-center justify-between bg-surface-container-low rounded-lg p-space-md">
+      <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">accessible</span><div><span class="t-body-sm text-on-surface-variant block">Step-free access</span><span class="t-title-md text-primary">Maintained</span></div></div>
+      <span class="t-label-md bg-secondary-container text-on-secondary-container px-2 py-1 rounded-full">Zero lifts missed</span>
+    </div>
+    <div class="flex items-center justify-between bg-surface-container-low rounded-lg p-space-md">
+      <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">tune</span><div><span class="t-body-sm text-on-surface-variant block">Automatic adjustments</span><span class="t-title-md text-primary">1 handled for you</span></div></div>
+      <span class="t-label-md bg-surface-container-high text-on-surface px-2 py-1 rounded-full">Metro platform hold</span>
+    </div>
+    <div class="flex items-center justify-between bg-secondary-container/50 rounded-lg p-space-md">
+      <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">shield</span><div><span class="t-code uppercase text-secondary block">Attention burden</span><span class="t-title-md text-primary">Your input needed: 0 times</span></div></div>
+      <span class="t-h-sm text-primary">0</span>
+    </div>
+  </div>
+
+  <p class="t-h-sm text-primary italic text-center mt-space-lg">"More intelligence outside. Effortless calm inside."</p>
+
+  <button class="mt-space-md w-full h-[52px] bg-primary text-on-primary t-title-md rounded-xl flex items-center justify-center gap-2 active:scale-[0.99] transition-all shadow-md focus-ring" onclick="Anchor.finishTrip()">
+    <span>Done</span><span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+  </button>
+  <button class="t-label-lg text-secondary flex items-center justify-center gap-1 py-3 focus-ring" onclick="Anchor.openAuditLog()"><span class="material-symbols-outlined text-[16px]">receipt_long</span>View journey audit log</button>
+</section>
+
+<!-- ============================================================= -->
+<!-- TAB: MESH (network overview)                                   -->
+<!-- ============================================================= -->
+<section id="screen-mesh" class="screen flex-col w-full px-margin-mobile pb-space-xl gap-space-md" data-screen>
+  <div class="pt-space-md">
+    <h1 class="t-h-lg-m text-primary">Wayfinding mesh</h1>
+    <p class="t-body-md text-on-surface-variant mt-1">Live status across every mode in the 2100 network, in one view.</p>
+  </div>
+  <div class="flex flex-col gap-space-sm" id="mesh-lines">
+    <div class="card p-space-md flex items-center gap-space-md">
+      <span class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-secondary-fixed text-[18px]">directions_bus</span></span>
+      <div class="flex-1"><p class="t-title-md text-primary">Bus mesh · Sync A-1</p><p class="t-body-sm text-on-surface-variant">42 corridors active</p></div>
+      <span class="t-label-md bg-status-handled-bg text-status-handled-fg px-2.5 py-1 rounded-full">On time</span>
+    </div>
+    <div class="card p-space-md flex items-center gap-space-md">
+      <span class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-secondary-fixed text-[18px]">subway</span></span>
+      <div class="flex-1"><p class="t-title-md text-primary">Rail-Mag network</p><p class="t-body-sm text-on-surface-variant">Central concourse · lift priority active</p></div>
+      <span class="t-label-md bg-status-handled-bg text-status-handled-fg px-2.5 py-1 rounded-full">On time</span>
+    </div>
+    <div class="card p-space-md flex items-center gap-space-md">
+      <span class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-secondary-fixed text-[18px]">flight</span></span>
+      <div class="flex-1"><p class="t-title-md text-primary">SkyLink sub-orbital</p><p class="t-body-sm text-on-surface-variant">Pad 3 · light crosswinds</p></div>
+      <span class="t-label-md bg-status-advisory-bg text-status-advisory-fg px-2.5 py-1 rounded-full">Advisory</span>
+    </div>
+    <div class="card p-space-md flex items-center gap-space-md">
+      <span class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-surface text-[18px]">tune</span></span>
+      <div class="flex-1"><p class="t-title-md text-primary">Smart road · Terminal hub</p><p class="t-body-sm text-on-surface-variant">Dedicated lane 4 · pods flowing</p></div>
+      <span class="t-label-md bg-status-handled-bg text-status-handled-fg px-2.5 py-1 rounded-full">On time</span>
+    </div>
+  </div>
+  <div class="flex items-start gap-2 bg-surface-container-low rounded-lg p-space-md">
+    <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">radar</span>
+    <p class="t-body-sm text-on-surface-variant">This is the same live mesh ANCHOR draws from when it plans, reroutes, or explains a decision — nothing here is a separate app.</p>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- TAB: PASS (digital transit pass)                               -->
+<!-- ============================================================= -->
+<section id="screen-pass" class="screen flex-col w-full px-margin-mobile pb-space-xl gap-space-md" data-screen>
+  <div class="pt-space-md">
+    <h1 class="t-h-lg-m text-primary">Transit passport</h1>
+    <p class="t-body-md text-on-surface-variant mt-1">One credential. No gates, cards or PINs to remember.</p>
+  </div>
+  <div class="rounded-xl p-space-lg bg-gradient-to-br from-primary to-primary-container text-on-primary shadow-md">
+    <div class="flex items-center justify-between"><span class="t-code uppercase tracking-widest text-secondary-fixed">ANCHOR passport</span><span class="material-symbols-outlined text-[20px]">anchor</span></div>
+    <p class="t-h-sm mt-space-md" id="pass-name">Guest Traveller</p>
+    <p class="t-body-sm text-on-primary/70 mt-1">Region: Central Mesh · Tier: Standard</p>
+    <div class="flex items-center justify-between mt-space-lg">
+      <span class="t-label-md text-on-primary/70">Conditions on file</span>
+      <span class="t-label-md" id="pass-conditions">Step-free · Minimal walking</span>
+    </div>
+  </div>
+  <div class="flex flex-col items-center gap-space-sm py-space-md">
+    <button id="nfc-ring" class="relative w-20 h-20 rounded-full bg-secondary-container flex items-center justify-center focus-ring" onclick="Anchor.verifyPass()" aria-label="Tap to verify passport">
+      <span class="absolute inset-0 rounded-full bg-secondary/20 animate-ping"></span>
+      <span class="material-symbols-outlined text-secondary text-[30px]">contactless</span>
+    </button>
+    <p class="t-label-lg text-on-surface-variant" id="pass-status">Tap to verify at any gate</p>
+  </div>
+  <div class="flex items-start gap-2 bg-surface-container-low rounded-lg p-space-md">
+    <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">verified_user</span>
+    <p class="t-body-sm text-on-surface-variant">Your accessibility conditions travel with your passport, so every operator on your route already knows what you need — you don't repeat yourself at each transfer.</p>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- TAB: STATION (accessibility hub & support)                     -->
+<!-- ============================================================= -->
+<section id="screen-station" class="screen flex-col w-full px-margin-mobile pb-space-xl gap-space-md" data-screen>
+  <div class="pt-space-md">
+    <h1 class="t-h-lg-m text-primary">Station &amp; comfort</h1>
+    <p class="t-body-md text-on-surface-variant mt-1">These settings change how the whole app looks and reads — not just this page.</p>
+  </div>
+
+  <div class="card p-space-lg flex flex-col gap-space-lg">
+    <div>
+      <p class="t-title-md text-primary mb-space-sm flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">format_size</span>Text size</p>
+      <div class="flex gap-space-sm" role="radiogroup" aria-label="Text size">
+        <button class="flex-1 py-2.5 rounded-lg t-label-lg focus-ring" data-scale="1" onclick="Anchor.setScale(1,this)">Standard</button>
+        <button class="flex-1 py-2.5 rounded-lg t-label-lg focus-ring" data-scale="1.15" onclick="Anchor.setScale(1.15,this)">Large</button>
+        <button class="flex-1 py-2.5 rounded-lg t-label-lg focus-ring" data-scale="1.3" onclick="Anchor.setScale(1.3,this)">X-Large</button>
+      </div>
+    </div>
+    <div class="flex items-center justify-between">
+      <div class="pr-space-md"><p class="t-title-md text-primary flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">menu_book</span>Plain language</p><p class="t-body-sm text-on-surface-variant mt-0.5">Shorter sentences, everyday words, throughout the app.</p></div>
+      <button id="toggle-plain" class="w-14 h-8 rounded-full bg-surface-container-high relative flex-shrink-0 focus-ring" onclick="Anchor.toggleSetting('plain')" role="switch" aria-checked="false" aria-label="Plain language"><span class="knob absolute top-1 left-1 w-6 h-6 rounded-full bg-white shadow transition-all"></span></button>
+    </div>
+    <div class="flex items-center justify-between">
+      <div class="pr-space-md"><p class="t-title-md text-primary flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">contrast</span>High contrast</p><p class="t-body-sm text-on-surface-variant mt-0.5">Stronger borders and darker text for low-glare reading.</p></div>
+      <button id="toggle-contrast" class="w-14 h-8 rounded-full bg-surface-container-high relative flex-shrink-0 focus-ring" onclick="Anchor.toggleSetting('contrast')" role="switch" aria-checked="false" aria-label="High contrast"><span class="knob absolute top-1 left-1 w-6 h-6 rounded-full bg-white shadow transition-all"></span></button>
+    </div>
+    <div class="flex items-center justify-between">
+      <div class="pr-space-md"><p class="t-title-md text-primary flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">motion_photos_off</span>Reduce motion</p><p class="t-body-sm text-on-surface-variant mt-0.5">Turns off pulsing, animated and moving elements.</p></div>
+      <button id="toggle-motion" class="w-14 h-8 rounded-full bg-surface-container-high relative flex-shrink-0 focus-ring" onclick="Anchor.toggleSetting('motion')" role="switch" aria-checked="false" aria-label="Reduce motion"><span class="knob absolute top-1 left-1 w-6 h-6 rounded-full bg-white shadow transition-all"></span></button>
+    </div>
+    <div class="flex items-center justify-between">
+      <div class="pr-space-md"><p class="t-title-md text-primary flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">record_voice_over</span>Read screens aloud</p><p class="t-body-sm text-on-surface-variant mt-0.5">Adds a listen button next to key information.</p></div>
+      <button id="toggle-voice" class="w-14 h-8 rounded-full bg-primary relative flex-shrink-0 focus-ring" onclick="Anchor.toggleSetting('voice')" role="switch" aria-checked="true" aria-label="Read screens aloud"><span class="knob absolute top-1 left-7 w-6 h-6 rounded-full bg-white shadow transition-all"></span></button>
+    </div>
+  </div>
+
+  <div class="card p-space-lg flex flex-col gap-space-md">
+    <p class="t-title-md text-primary flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">support_agent</span>Station concierge</p>
+    <p class="t-body-sm text-on-surface-variant">A person is always reachable if you'd rather not use the screen at all.</p>
+    <div class="flex gap-space-sm">
+      <button class="flex-1 h-11 rounded-lg bg-primary text-on-primary t-label-lg flex items-center justify-center gap-1 focus-ring" onclick="Anchor.concierge()"><span class="material-symbols-outlined text-[18px]">call</span>Call concierge</button>
+      <button class="flex-1 h-11 rounded-lg bg-surface-container text-on-surface t-label-lg flex items-center justify-center gap-1 focus-ring" onclick="Anchor.go('routes')"><span class="material-symbols-outlined text-[18px]">route</span>Plan without ANCHOR</button>
+    </div>
+    <button class="w-full h-11 rounded-lg bg-error-container text-on-error-container t-label-lg flex items-center justify-center gap-1 focus-ring" onclick="Anchor.emergency()"><span class="material-symbols-outlined text-[18px]">emergency</span>Request platform assistance now</button>
+  </div>
+
+  <div class="flex flex-col gap-space-sm">
+    <h2 class="t-title-lg text-primary">Anchor conditions on file</h2>
+    <div class="grid grid-cols-2 gap-space-sm" id="condition-chips-station"></div>
+  </div>
+
+  <div class="card p-space-lg">
+    <button class="w-full flex items-center justify-between focus-ring" onclick="Anchor.toggleAbout()" aria-expanded="false" aria-controls="about-text">
+      <span class="t-title-md text-primary flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">info</span>About this design</span>
+      <span class="material-symbols-outlined text-on-surface-variant" id="about-chevron">expand_more</span>
+    </button>
+    <div id="about-text" class="hidden mt-space-sm t-body-sm text-on-surface-variant leading-relaxed">
+      <p>ANCHOR is deliberately quiet. In 2100 the transport network is fully autonomous, so the interface's job isn't to look futuristic — it's to stay calm and legible while it carries real responsibility. Bright motion and dense data would work against the people this brief asks us to design for: someone anxious, someone with low vision, someone who has never used a transit app before.</p>
+      <p class="mt-space-sm">Every screen uses the same type, spacing and colour system, and the same accessibility settings apply everywhere — nothing here is a one-off "accessible version." If a route can't meet your conditions, ANCHOR says so and offers real choices, rather than quietly dropping the requirement to hit a time.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ BOTTOM NAV ============ -->
+<nav class="fixed bottom-0 w-full z-40 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-4px_24px_rgba(30,58,51,0.08)]">
+  <div class="flex justify-around items-center h-16 px-gutter-mobile max-w-xl mx-auto">
+    <button class="nav-tab flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-primary font-semibold focus-ring" data-tab="voyage" onclick="Anchor.go('home')"><span class="material-symbols-outlined text-[22px]">near_me</span><span class="t-label-md tracking-tight">Voyage</span></button>
+    <button class="nav-tab flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-on-surface-variant focus-ring" data-tab="mesh" onclick="Anchor.go('mesh')"><span class="material-symbols-outlined text-[22px]">radar</span><span class="t-label-md tracking-tight">Mesh</span></button>
+    <button class="nav-tab flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-on-surface-variant focus-ring" data-tab="pass" onclick="Anchor.go('pass')"><span class="material-symbols-outlined text-[22px]">passkey</span><span class="t-label-md tracking-tight">Pass</span></button>
+    <button class="nav-tab flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-on-surface-variant focus-ring" data-tab="station" onclick="Anchor.go('station')"><span class="material-symbols-outlined text-[22px]">concierge</span><span class="t-label-md tracking-tight">Station</span></button>
+  </div>
+</nav>
+
+<!-- ============ COMFORT SHEET (quick accessibility panel, reachable from every screen) ============ -->
+<div id="comfort-sheet" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 sheet-backdrop" onclick="Anchor.closeComfort()"></div>
+  <div class="absolute bottom-0 left-0 right-0 max-w-xl mx-auto bg-surface-container-lowest rounded-t-xl p-space-lg pb-safe" role="dialog" aria-label="Comfort settings">
+    <div class="w-10 h-1.5 rounded-full bg-outline-variant mx-auto mb-space-md"></div>
+    <div class="flex items-center justify-between mb-space-md"><h2 class="t-title-lg text-primary">Comfort settings</h2><button class="p-1 focus-ring" onclick="Anchor.closeComfort()" aria-label="Close"><span class="material-symbols-outlined">close</span></button></div>
+    <p class="t-body-sm text-on-surface-variant mb-space-md">Quick access to the same controls as the Station tab — change them here without leaving your journey.</p>
+    <div class="grid grid-cols-3 gap-space-sm mb-space-md">
+      <button class="py-2.5 rounded-lg t-label-lg focus-ring" data-scale="1" onclick="Anchor.setScale(1,this)">Standard</button>
+      <button class="py-2.5 rounded-lg t-label-lg focus-ring" data-scale="1.15" onclick="Anchor.setScale(1.15,this)">Large</button>
+      <button class="py-2.5 rounded-lg t-label-lg focus-ring" data-scale="1.3" onclick="Anchor.setScale(1.3,this)">X-Large</button>
+    </div>
+    <div class="flex flex-col gap-space-sm">
+      <button class="w-full flex items-center justify-between py-2 focus-ring" onclick="Anchor.toggleSetting('plain')"><span class="t-body-md text-on-surface">Plain language</span><span class="material-symbols-outlined text-secondary" id="comfort-icon-plain">toggle_off</span></button>
+      <button class="w-full flex items-center justify-between py-2 focus-ring" onclick="Anchor.toggleSetting('contrast')"><span class="t-body-md text-on-surface">High contrast</span><span class="material-symbols-outlined text-secondary" id="comfort-icon-contrast">toggle_off</span></button>
+      <button class="w-full flex items-center justify-between py-2 focus-ring" onclick="Anchor.toggleSetting('motion')"><span class="t-body-md text-on-surface">Reduce motion</span><span class="material-symbols-outlined text-secondary" id="comfort-icon-motion">toggle_off</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="fixed left-1/2 -translate-x-1/2 bottom-24 z-[60] hidden px-space-md py-3 rounded-full bg-inverse-surface text-inverse-on-surface t-label-lg shadow-lg max-w-[90%] text-center"></div>
+
+<script>
+(function(){
+  "use strict";
+  var CONDITION_LABELS = { stepfree:'Step-free access', minwalk:'Minimal walking', actearly:'Act early on risk', askfirst:'Ask before changes' };
+  var PERSONAS = {
+    justme:     { conditions: [],                         scale: 1,    plain: false, contrast: false, toast: "Standard mode — no extra conditions applied." },
+    wheelchair: { conditions: ['stepfree','minwalk'],      scale: 1,    plain: false, contrast: false, toast: "Adjusted for a wheelchair user: step-free access and minimal walking are now required, not optional." },
+    lowvision:  { conditions: ['stepfree'],                scale: 1.3,  plain: false, contrast: true,  toast: "Adjusted for low vision: larger text and higher contrast are on everywhere in the app." },
+    firsttime:  { conditions: ['minwalk','askfirst'],      scale: 1.15, plain: true,  contrast: false, toast: "Adjusted for a first-time rider: plain language is on, and ANCHOR will ask before changing anything." }
+  };
+  var liveTimer = null, liveProgress = 0, disruptionFired = false, voiceOn = true;
+  var arrivalMinutes = 600; // 10:00 default, minutes since midnight
+
+  function $(id){ return document.getElementById(id); }
+  function qsa(sel,root){ return Array.prototype.slice.call((root||document).querySelectorAll(sel)); }
+
+  function fmt12(mins){
+    mins = ((Math.round(mins) % 1440) + 1440) % 1440;
+    var h = Math.floor(mins/60), m = mins%60;
+    var suffix = h >= 12 ? 'PM' : 'AM';
+    var h12 = h % 12; if(h12 === 0) h12 = 12;
+    return h12 + ':' + (m<10?'0':'') + m + ' ' + suffix;
+  }
+  function fmt24clock(mins){
+    mins = ((Math.round(mins) % 1440) + 1440) % 1440;
+    var h = Math.floor(mins/60), m = mins%60;
+    return (h<10?'0':'')+h + ':' + (m<10?'0':'') + m;
+  }
+
+  var Anchor = {
+    // ---------- navigation ----------
+    go: function(name){
+      qsa('.screen').forEach(function(s){ s.classList.remove('active'); });
+      var target = $('screen-'+name);
+      if(!target) return;
+      target.classList.add('active');
+      window.scrollTo({top:0, behavior: document.body.getAttribute('data-motion')==='reduced' ? 'auto' : 'smooth'});
+      history.replaceState(null,'','#'+name);
+
+      var sectionNames = {home:'Voyage Hub', routes:'Manual Route', compare:'Compare Modes', itinerary:'Journey Details', live:'Live Journey', noroute:'Assistance', arrived:'Arrival', mesh:'Wayfinding Mesh', pass:'Passport', station:'Station & Comfort', intro:'Welcome'};
+      $('hdr-section').textContent = sectionNames[name] || 'Voyage Hub';
+
+      var tabFor = {home:'voyage', routes:'voyage', compare:'voyage', itinerary:'voyage', live:'voyage', noroute:'voyage', arrived:'voyage', mesh:'mesh', pass:'pass', station:'station'};
+      qsa('.nav-tab').forEach(function(btn){
+        var active = btn.getAttribute('data-tab') === tabFor[name];
+        btn.classList.toggle('text-primary', active);
+        btn.classList.toggle('font-semibold', active);
+        btn.classList.toggle('text-on-surface-variant', !active);
+      });
+
+      if(name === 'live'){ Anchor.startLiveSimulation(); } else { Anchor.stopLiveSimulation(); }
+      if(name === 'itinerary'){ Anchor.renderItineraryPills(); Anchor.updateDynamicTimes(); }
+      if(name === 'station'){ Anchor.renderStationChips(); }
+      if(name === 'compare'){ Anchor.renderCompare(); }
+      if(name === 'home'){ Anchor.renderWelcomeBack(); }
+      if(name === 'live' || name === 'arrived'){ Anchor.updateDynamicTimes(); }
+    },
+
+    finishIntro: function(){ localStorage.setItem('anchor_seen_intro','1'); Anchor.go('home'); },
+
+    // ---------- home screen ----------
+    useRoutine: function(){
+      $('destination-input').value = 'Riverside Medical Centre';
+      $('arrival-time').value = '10:00';
+      Anchor.onTimeInput('10:00');
+      Anchor.toast('Loaded your Tuesday routine');
+    },
+    onDestInput: function(val){
+      var box = $('dest-suggestions');
+      var options = ['Riverside Medical Centre','Central Waystation','SkyLink Terminal 4','Harbourfront Gardens','North Mesh Library'];
+      var matches = val.length ? options.filter(function(o){ return o.toLowerCase().indexOf(val.toLowerCase()) !== -1 && o.toLowerCase() !== val.toLowerCase(); }) : [];
+      box.innerHTML = '';
+      if(matches.length){
+        box.classList.remove('hidden'); box.classList.add('flex');
+        matches.slice(0,4).forEach(function(m){
+          var b = document.createElement('button');
+          b.className = 't-body-md text-left text-on-surface px-space-md py-2.5 rounded-lg hover:bg-surface-container-high focus-ring';
+          b.textContent = m;
+          b.onclick = function(){ $('destination-input').value = m; box.classList.add('hidden'); box.classList.remove('flex'); };
+          box.appendChild(b);
+        });
+      } else { box.classList.add('hidden'); box.classList.remove('flex'); }
+    },
+    onTimeInput: function(val){
+      // val is "HH:MM" 24h from the native time input
+      var parts = (val || '10:00').split(':');
+      var mins = parseInt(parts[0],10)*60 + parseInt(parts[1],10);
+      if(isNaN(mins)) mins = 600;
+      arrivalMinutes = mins;
+      $('arrival-time-display').textContent = fmt12(mins);
+      localStorage.setItem('anchor_arrival_minutes', String(mins));
+    },
+    toggleChip: function(el){
+      var pressed = el.getAttribute('aria-pressed') === 'true';
+      el.setAttribute('aria-pressed', String(!pressed));
+      var icon = el.querySelector('.indicator-icon');
+      if(!pressed){
+        el.classList.remove('bg-surface-container','text-on-surface');
+        el.classList.add('bg-primary-container','text-on-primary');
+        icon.textContent = 'check_circle'; icon.classList.remove('text-on-surface-variant','opacity-40'); icon.classList.add('text-secondary-fixed');
+      } else {
+        el.classList.remove('bg-primary-container','text-on-primary');
+        el.classList.add('bg-surface-container','text-on-surface');
+        icon.textContent = 'radio_button_unchecked'; icon.classList.remove('text-secondary-fixed'); icon.classList.add('text-on-surface-variant','opacity-40');
+      }
+      Anchor.saveConditions();
+      // if user manually edits conditions, drop persona lock to "justme" styling is not necessary; keep persona chips as-is
+    },
+    saveConditions: function(){
+      var active = qsa('#condition-chips .chip').filter(function(c){ return c.getAttribute('aria-pressed')==='true'; }).map(function(c){ return c.getAttribute('data-cond'); });
+      localStorage.setItem('anchor_conditions', JSON.stringify(active));
+    },
+    getConditions: function(){
+      try { return JSON.parse(localStorage.getItem('anchor_conditions')) || ['stepfree','minwalk']; } catch(e){ return ['stepfree','minwalk']; }
+    },
+    setConditions: function(list){
+      qsa('#condition-chips .chip').forEach(function(c){
+        var cond = c.getAttribute('data-cond');
+        var shouldBeOn = list.indexOf(cond) !== -1;
+        var isOn = c.getAttribute('aria-pressed') === 'true';
+        if(shouldBeOn !== isOn){ Anchor.toggleChip(c); }
+      });
+    },
+
+    // ---------- persona quick-select ----------
+    applyPersona: function(key, el){
+      var p = PERSONAS[key]; if(!p) return;
+      qsa('.persona-chip').forEach(function(b){ b.setAttribute('aria-pressed', b === el ? 'true' : 'false'); });
+      Anchor.setConditions(p.conditions);
+      Anchor.setScale(p.scale, null);
+      Anchor.setSetting('plain', p.plain);
+      Anchor.setSetting('contrast', p.contrast);
+      Anchor.toast(p.toast);
+    },
+
+    setAnchor: function(){
+      var dest = $('destination-input').value.trim();
+      if(!dest){ Anchor.toast('Add a destination first'); $('destination-input').focus(); return; }
+      var label = $('set-anchor-label');
+      var btn = $('set-anchor-btn');
+      btn.classList.add('scale-95');
+      var original = label.textContent;
+      label.textContent = 'Locking anchor mesh…';
+      localStorage.setItem('anchor_destination', dest);
+      localStorage.setItem('anchor_arrival_minutes', String(arrivalMinutes));
+      setTimeout(function(){
+        btn.classList.remove('scale-95');
+        label.textContent = 'Anchor locked · ' + dest.split(' ')[0];
+        Anchor.syncDestination();
+        setTimeout(function(){ label.textContent = original; Anchor.go('itinerary'); }, 500);
+      }, 550);
+    },
+
+    renderWelcomeBack: function(){
+      var banner = $('welcome-back-banner');
+      var visited = localStorage.getItem('anchor_has_visited');
+      if(visited){
+        var conds = Anchor.getConditions().map(function(c){ return CONDITION_LABELS[c]; }).filter(Boolean);
+        var condText = conds.length ? conds.join(' and ') : 'no special conditions';
+        $('welcome-back-text').textContent = 'Welcome back — ANCHOR remembered your saved conditions (' + condText + ') and applied them to this trip automatically.';
+        banner.classList.remove('hidden'); banner.classList.add('flex');
+      } else {
+        banner.classList.add('hidden'); banner.classList.remove('flex');
+        localStorage.setItem('anchor_has_visited','1');
+      }
+    },
+
+    // ---------- manual route choice ----------
+    chooseRoute: function(el, key){
+      qsa('#route-options .card').forEach(function(c){
+        c.setAttribute('aria-pressed','false');
+        c.querySelector('.check-dot').className = 'check-dot w-6 h-6 rounded-full bg-surface-container-high';
+        c.querySelector('.check-dot').innerHTML = '';
+      });
+      el.setAttribute('aria-pressed','true');
+      var dot = el.querySelector('.check-dot');
+      dot.className = 'check-dot w-6 h-6 rounded-full bg-primary flex items-center justify-center';
+      dot.innerHTML = '<span class="material-symbols-outlined text-on-primary text-[14px]">check</span>';
+      localStorage.setItem('anchor_route_choice', key);
+    },
+    confirmRoute: function(){
+      Anchor.toast('Route confirmed');
+      Anchor.syncDestination();
+      setTimeout(function(){ Anchor.go('itinerary'); }, 350);
+    },
+
+    // ---------- compare modes ----------
+    renderCompare: function(){
+      var dest = localStorage.getItem('anchor_destination') || 'Riverside Medical Centre';
+      $('compare-dest').textContent = dest;
+      $('compare-time').textContent = fmt12(arrivalMinutes);
+      $('cmp-bus-eta').textContent = fmt12(arrivalMinutes - 8);
+      $('cmp-fast-eta').textContent = fmt12(arrivalMinutes - 19);
+      $('cmp-air-eta').textContent = fmt12(arrivalMinutes - 25);
+      $('cmp-road-eta').textContent = fmt12(arrivalMinutes - 2);
+    },
+
+    // ---------- itinerary ----------
+    syncDestination: function(){
+      var dest = localStorage.getItem('anchor_destination') || 'Riverside Medical Centre';
+      var mins = parseInt(localStorage.getItem('anchor_arrival_minutes'), 10);
+      if(!isNaN(mins)) arrivalMinutes = mins;
+      qsa('#it-destination, #arr-destination').forEach(function(el){ el.textContent = dest; });
+      $('routes-dest') && ($('routes-dest').textContent = dest);
+      $('routes-time') && ($('routes-time').textContent = fmt12(arrivalMinutes));
+      var disp = fmt12(arrivalMinutes).split(' ');
+      $('it-arrival').innerHTML = disp[0] + ' <span class="t-title-md">' + disp[1] + '</span>';
+      Anchor.updateDynamicTimes();
+    },
+    updateDynamicTimes: function(){
+      var estimate = arrivalMinutes - 8; // 8 min buffer
+      var busDepart = estimate - 40;
+      var metroTransfer = estimate - 24;
+      var podDepart = estimate - 3;
+      var podArrive = estimate;
+      var actualArrival = arrivalMinutes - 2; // arrived 2 min early
+
+      if($('t-bus-depart')) $('t-bus-depart').textContent = fmt12(busDepart);
+      if($('t-metro-transfer')) $('t-metro-transfer').textContent = fmt12(metroTransfer);
+      if($('t-pod-depart')) $('t-pod-depart').textContent = fmt12(podDepart);
+      if($('t-pod-arrive')) $('t-pod-arrive').textContent = fmt12(podArrive);
+      if($('why-time')) $('why-time').textContent = fmt12(arrivalMinutes);
+      if($('why-time-plain')) $('why-time-plain').textContent = fmt12(arrivalMinutes);
+
+      if($('live-commitment')) $('live-commitment').textContent = fmt12(arrivalMinutes);
+      if($('live-estimate')) $('live-estimate').textContent = fmt12(estimate);
+      if($('live-departed')) $('live-departed').textContent = 'Departed ' + fmt24clock(busDepart);
+      if($('live-eta')) $('live-eta').textContent = 'Est. ' + fmt24clock(estimate);
+
+      if($('route-anchor-desc')) $('route-anchor-desc').textContent = 'Arrives ' + fmt12(estimate) + ' · step-free the whole way · 8 min buffer';
+      if($('route-fast-desc')) $('route-fast-desc').textContent = 'Arrives ' + fmt12(estimate - 11) + ' · 2 flights of stairs at the Central transfer';
+      if($('route-air-desc')) $('route-air-desc').textContent = 'Arrives ' + fmt12(estimate - 17) + ' · fastest option · the pad is a 12 min walk from here, then a short step-free pod ride';
+
+      if($('arr-time')) $('arr-time').textContent = fmt12(actualArrival);
+      if($('arr-commitment')) $('arr-commitment').textContent = fmt12(arrivalMinutes);
+    },
+    renderItineraryPills: function(){
+      var wrap = $('it-condition-pills'); if(!wrap) return;
+      wrap.innerHTML = '';
+      Anchor.getConditions().forEach(function(c){
+        var span = document.createElement('span');
+        span.className = 't-label-md bg-secondary-container text-on-secondary-container px-2.5 py-1 rounded-full flex items-center gap-1';
+        span.innerHTML = '<span class="material-symbols-outlined text-[13px]">check</span>' + (CONDITION_LABELS[c]||c);
+        wrap.appendChild(span);
+      });
+      var buffer = document.createElement('span');
+      buffer.className = 't-label-md bg-tertiary-fixed text-on-tertiary-fixed px-2.5 py-1 rounded-full';
+      buffer.textContent = '8 min buffer';
+      wrap.appendChild(buffer);
+    },
+    startJourney: function(){ Anchor.go('live'); },
+
+    // ---------- live tracking ----------
+    switchTab: function(tab){
+      var s = $('view-status'), m = $('view-map'), bs = $('tab-btn-status'), bm = $('tab-btn-map');
+      var activeCls = 'flex-1 py-2 rounded-lg t-label-lg text-center bg-surface-container-lowest text-primary shadow-sm font-semibold focus-ring';
+      var inactiveCls = 'flex-1 py-2 rounded-lg t-label-lg text-center text-on-surface-variant focus-ring';
+      if(tab === 'status'){ s.classList.remove('hidden'); s.classList.add('flex'); m.classList.add('hidden'); m.classList.remove('flex'); bs.className = activeCls; bm.className = inactiveCls; }
+      else { m.classList.remove('hidden'); m.classList.add('flex'); s.classList.add('hidden'); s.classList.remove('flex'); bm.className = activeCls; bs.className = inactiveCls; }
+    },
+    startLiveSimulation: function(){
+      Anchor.stopLiveSimulation();
+      liveProgress = 0; disruptionFired = false;
+      $('disruption-banner').classList.add('hidden'); $('disruption-banner').classList.remove('flex');
+      $('live-continue-label').textContent = 'Continue journey';
+      $('seg1').style.width = '0%'; $('seg2').style.width = '0%'; $('seg3').style.width = '0%';
+      $('live-status-text').textContent = 'On track';
+      $('live-headline').textContent = 'On Bus 14';
+      $('live-subtext').textContent = 'Next: get off at Central in 4 stops';
+      Anchor.updateDynamicTimes();
+      liveTimer = setInterval(Anchor.tickLive, 1400);
+      Anchor.tickLive();
+    },
+    stopLiveSimulation: function(){ if(liveTimer){ clearInterval(liveTimer); liveTimer = null; } },
+    tickLive: function(){
+      liveProgress = Math.min(100, liveProgress + 9);
+      if(liveProgress <= 40){
+        $('seg1').style.width = Math.round(liveProgress/40*100) + '%';
+      } else if(liveProgress <= 75){
+        $('seg1').style.width = '100%';
+        $('live-headline').textContent = 'On Metro Line 2';
+        $('live-subtext').textContent = 'Next: alight at Central, platform lift ready';
+        $('seg2').style.width = Math.round((liveProgress-40)/35*100) + '%';
+        if(!disruptionFired){
+          disruptionFired = true;
+          $('disruption-banner').classList.remove('hidden'); $('disruption-banner').classList.add('flex');
+          Anchor.toast('ANCHOR handled a transfer change automatically');
+        }
+      } else {
+        $('seg1').style.width = '100%'; $('seg2').style.width = '100%';
+        $('live-headline').textContent = 'On Smart Road Pod';
+        $('live-subtext').textContent = 'Next: arrive at destination';
+        $('seg3').style.width = Math.round((liveProgress-75)/25*100) + '%';
+      }
+      if(liveProgress >= 100){
+        Anchor.stopLiveSimulation();
+        $('live-status-text').textContent = 'Arriving';
+        $('live-continue-label').textContent = 'View arrival summary';
+      }
+    },
+    explainDecision: function(){
+      Anchor.speak('Anchor rerouted your metro transfer to keep the platform lift priority active. Your arrival time is unchanged.');
+      Anchor.toast('ANCHOR chose a different transfer to protect your step-free access and arrival time.');
+    },
+    continueJourney: function(){
+      if(liveProgress >= 100){ Anchor.go('arrived'); }
+      else { liveProgress = Math.min(100, liveProgress + 25); Anchor.tickLive(); Anchor.toast('Fast-forwarding your journey for this demo'); }
+    },
+
+    // ---------- no accessible route (failure state) ----------
+    notifyWhenAvailable: function(){ Anchor.toast('You will be notified the instant a step-free route opens.'); },
+
+    // ---------- arrival ----------
+    finishTrip: function(){ Anchor.go('home'); },
+    openAuditLog: function(){
+      Anchor.toast('Audit log: 1 automatic transfer change · 0 manual interruptions · step-free maintained throughout');
+    },
+
+    // ---------- pass ----------
+    verifyPass: function(){
+      $('pass-status').textContent = 'Verified · gate opening…';
+      Anchor.toast('Passport verified');
+      setTimeout(function(){ $('pass-status').textContent = 'Tap to verify at any gate'; }, 1800);
+    },
+
+    // ---------- station: accessibility & support ----------
+    renderStationChips: function(){
+      var wrap = $('condition-chips-station'); if(!wrap) return;
+      var active = Anchor.getConditions();
+      wrap.innerHTML = '';
+      Object.keys(CONDITION_LABELS).forEach(function(key){
+        var on = active.indexOf(key) !== -1;
+        var b = document.createElement('div');
+        b.className = 'flex items-center gap-2 px-space-md py-3 rounded-xl ' + (on ? 'bg-primary-container text-on-primary' : 'bg-surface-container text-on-surface');
+        b.innerHTML = '<span class="material-symbols-outlined text-[18px]">' + (on ? 'check_circle' : 'radio_button_unchecked') + '</span><span class="t-label-lg">' + CONDITION_LABELS[key] + '</span>';
+        wrap.appendChild(b);
+      });
+    },
+    concierge: function(){ Anchor.toast('Connecting you to a live station concierge…'); },
+    emergency: function(){ Anchor.toast('Platform assistance requested — someone is on their way to you.'); },
+    toggleAbout: function(){
+      var box = $('about-text'); var chevron = $('about-chevron');
+      var btn = box.previousElementSibling ? null : null;
+      var expanded = !box.classList.contains('hidden');
+      if(expanded){ box.classList.add('hidden'); chevron.textContent = 'expand_more'; }
+      else { box.classList.remove('hidden'); chevron.textContent = 'expand_less'; }
+    },
+
+    // ---------- comfort settings ----------
+    openComfort: function(){ $('comfort-sheet').classList.remove('hidden'); },
+    closeComfort: function(){ $('comfort-sheet').classList.add('hidden'); },
+    setScale: function(scale, el){
+      document.documentElement.style.setProperty('--a11y-scale', scale);
+      localStorage.setItem('anchor_scale', scale);
+      qsa('[data-scale]').forEach(function(b){
+        var active = parseFloat(b.getAttribute('data-scale')) === scale;
+        b.classList.toggle('bg-primary', active);
+        b.classList.toggle('text-on-primary', active);
+        b.classList.toggle('bg-surface-container', !active);
+        b.classList.toggle('text-on-surface', !active);
+      });
+    },
+    // toggleSetting flips the current value; setSetting forces an explicit value (used by personas)
+    toggleSetting: function(key){
+      var body = document.body;
+      if(key === 'plain'){ Anchor.setSetting('plain', body.getAttribute('data-plain') !== 'true'); }
+      else if(key === 'contrast'){ Anchor.setSetting('contrast', body.getAttribute('data-contrast') !== 'high'); }
+      else if(key === 'motion'){ Anchor.setSetting('motion', body.getAttribute('data-motion') !== 'reduced'); }
+      else if(key === 'voice'){ Anchor.setSetting('voice', !voiceOn); }
+    },
+    setSetting: function(key, on){
+      var body = document.body;
+      if(key === 'plain'){ body.setAttribute('data-plain', String(!!on)); localStorage.setItem('anchor_plain', String(!!on)); Anchor.reflectToggle('plain', !!on); }
+      else if(key === 'contrast'){ body.setAttribute('data-contrast', on ? 'high' : 'normal'); localStorage.setItem('anchor_contrast', on ? 'high':'normal'); Anchor.reflectToggle('contrast', !!on); }
+      else if(key === 'motion'){ body.setAttribute('data-motion', on ? 'reduced' : 'normal'); localStorage.setItem('anchor_motion', on ? 'reduced':'normal'); Anchor.reflectToggle('motion', !!on); }
+      else if(key === 'voice'){ voiceOn = !!on; localStorage.setItem('anchor_voice', voiceOn ? '1':'0'); Anchor.reflectToggle('voice', voiceOn); }
+    },
+    reflectToggle: function(key, on){
+      var stationBtn = $('toggle-'+key);
+      if(stationBtn){
+        stationBtn.classList.toggle('bg-primary', on);
+        stationBtn.classList.toggle('bg-surface-container-high', !on);
+        stationBtn.setAttribute('aria-checked', String(on));
+        var knob = stationBtn.querySelector('.knob');
+        if(knob) knob.style.left = on ? '1.75rem' : '0.25rem';
+      }
+      var comfortIcon = $('comfort-icon-'+key);
+      if(comfortIcon) comfortIcon.textContent = on ? 'toggle_on' : 'toggle_off';
+    },
+
+    // ---------- speech ----------
+    speak: function(text){
+      if(!voiceOn) { Anchor.toast('Turn on "Read screens aloud" in Station to use Listen buttons'); return; }
+      if(!('speechSynthesis' in window)){ Anchor.toast('Voice reading is not supported in this browser'); return; }
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.rate = 0.95;
+      window.speechSynthesis.speak(u);
+    },
+
+    // ---------- toast ----------
+    toast: function(msg){
+      var t = $('toast');
+      t.textContent = msg;
+      t.classList.remove('hidden');
+      clearTimeout(t._timer);
+      t._timer = setTimeout(function(){ t.classList.add('hidden'); }, 2600);
+    }
+  };
+
+  window.Anchor = Anchor;
+
+  // ---------- init ----------
+  document.addEventListener('DOMContentLoaded', function(){
+    var scale = parseFloat(localStorage.getItem('anchor_scale')) || 1;
+    document.documentElement.style.setProperty('--a11y-scale', scale);
+    qsa('[data-scale]').forEach(function(b){
+      var active = parseFloat(b.getAttribute('data-scale')) === scale;
+      b.classList.toggle('bg-primary', active); b.classList.toggle('text-on-primary', active);
+      b.classList.toggle('bg-surface-container', !active); b.classList.toggle('text-on-surface', !active);
+    });
+    var plain = localStorage.getItem('anchor_plain') === 'true';
+    document.body.setAttribute('data-plain', String(plain)); Anchor.reflectToggle('plain', plain);
+    var contrast = localStorage.getItem('anchor_contrast') === 'high';
+    document.body.setAttribute('data-contrast', contrast ? 'high' : 'normal'); Anchor.reflectToggle('contrast', contrast);
+    var motion = localStorage.getItem('anchor_motion') === 'reduced';
+    document.body.setAttribute('data-motion', motion ? 'reduced' : 'normal'); Anchor.reflectToggle('motion', motion);
+    voiceOn = localStorage.getItem('anchor_voice') !== '0';
+    Anchor.reflectToggle('voice', voiceOn);
+
+    var savedMins = parseInt(localStorage.getItem('anchor_arrival_minutes'), 10);
+    arrivalMinutes = isNaN(savedMins) ? 600 : savedMins;
+    $('arrival-time').value = fmt24clock(arrivalMinutes);
+    $('arrival-time-display').textContent = fmt12(arrivalMinutes);
+
+    Anchor.syncDestination();
+
+    function tickClock(){
+      var now = new Date();
+      var h = now.getHours(); var m = now.getMinutes();
+      var suffix = h >= 12 ? 'PM' : 'AM'; var h12 = h % 12; if(h12 === 0) h12 = 12;
+      $('clock-now').textContent = h12 + ':' + (m<10?'0':'') + m + ' ' + suffix;
+    }
+    tickClock(); setInterval(tickClock, 30000);
+
+    var hash = location.hash.replace('#','');
+    var seenIntro = localStorage.getItem('anchor_seen_intro');
+    var valid = ['home','routes','compare','itinerary','live','noroute','arrived','mesh','pass','station','intro'];
+    if(hash && valid.indexOf(hash) !== -1){ Anchor.go(hash); }
+    else if(!seenIntro){ Anchor.go('intro'); }
+    else { Anchor.go('home'); }
+  });
+})();
+</script>
+</body>
+</html>
